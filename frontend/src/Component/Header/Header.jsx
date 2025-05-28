@@ -17,7 +17,7 @@ function Header() {
           {/* logo */}
           <div className={classes.logo_container} >
             <Link to ="/">
-              <img src="https://pngimg.com/uploads/amazon/small/amazon_PNG11.png" alt="Amazon logo" />
+              <img src="https://cdn.logojoy.com/wp-content/uploads/20230629132639/current-logo-600x338.png" alt="Amazon logo" />
             </Link>
             {/* Delivery */}
             <div className={classes.delivery}>
@@ -55,12 +55,12 @@ function Header() {
             </select>
           </Link>
           {/* Three components */}
-          <a to="">
-            <div>
+          <Link to="/Auth">
+            <div className={classes.signin}>
               <p>Signin</p>
               <span>Account &Lists</span>
             </div>
-          </a>
+          </Link>
           {/* order */}
           <Link to="/orders">
             <p>Returns</p>

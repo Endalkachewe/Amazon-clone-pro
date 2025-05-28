@@ -5,7 +5,7 @@ function Order() {
   return (
  <LayOut>
           <h1>Order</h1>
-   </LayOut>
+ </LayOut>
   )
 }
 
