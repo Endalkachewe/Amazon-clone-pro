@@ -5,8 +5,9 @@ import { GiStorkDelivery } from "react-icons/gi"; import { FaShoppingCart } from
 import classes from './Header.module.css'
 import { Link } from 'react-router-dom';
 import { DataContext } from '../DataProvider/DataProvider';
+import { auth } from '../../Utility/firebase';
 function Header() {
-  const [{ basket }, dispatch] = useContext(DataContext)
+  const [{user,basket }, dispatch] = useContext(DataContext)
   const totalItem = basket?.reduce((amount,item) => {
     return item.amount+amount
   },0)
@@ -44,7 +45,7 @@ function Header() {
               <input type="text" name='' id='' placeholder='search product' />
           
           {/* icon */}
-          <FaSearch size={25} />
+          <FaSearch size={38} />
         </div>
         {/* End of the second section */}
         <div className={classes.order_container}>
@@ -55,10 +56,24 @@ function Header() {
             </select>
           </Link>
           {/* Three components */}
-          <Link to="/Auth">
-            <div className={classes.signin}>
-              <p>Signin</p>
-              <span>Account &Lists</span>
+          <Link to={!user && "/Auth"}>
+              <div className={classes.signin}>
+                <div>
+                  {user ? (
+                    <>
+                    <p>Hello {user?.email?.split("@")[0]}</p>
+                      <span onClick={()=>auth.signOut()}>SignOut</span>
+                    </>
+                  ) : (
+                      <>
+                        <p>Hello, Sign In
+                        <span>Account &Lists</span></p>
+                      </>
+                  
+                )}
+                   
+                </div>
+             
             </div>
           </Link>
           {/* order */}

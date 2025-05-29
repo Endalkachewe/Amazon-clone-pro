@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import LayOut from '../../Component/LayOut/LayOut'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import classes from './signup.module.css'
 import { auth } from '../../Utility/firebase'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
@@ -18,7 +18,8 @@ function Auth() {
     signUp: false
   });
   
-const [{user},dispatch]=useContext(DataContext)
+  const [{ user }, dispatch] = useContext(DataContext)
+  const navigate= useNavigate()
 
   const authHandler = async(e) => {
     e.preventDefault()
@@ -33,7 +34,8 @@ const [{user},dispatch]=useContext(DataContext)
             type: Type.SET_USER,
             user:userInfo.user
           })
-          setLoading({...loading, signIn:false})
+          setLoading({ ...loading, signIn: false })
+          navigate("/")
         })
         .catch((err) => {
           console.log(err);
@@ -49,7 +51,8 @@ const [{user},dispatch]=useContext(DataContext)
             type: Type.SET_USER,
             user:userInfo.user
           })
-          setLoading({...loading, signUp:false})
+          setLoading({ ...loading, signUp: false })
+          navigate("/")
         })
         .catch((err) => {
           console.log(err);
@@ -64,7 +67,7 @@ const [{user},dispatch]=useContext(DataContext)
   return (
     <section className={classes.login}>
       {/* logo */}
-      <Link to=''>
+      <Link to='/'>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsnsUbgoMogU5PjZwKQuYFBj5Tb9m5JrBj-M2XL4gZw4KnIYvE7WwTOEtl0727CZukUUk&usqp=CAU" alt="Amazon logo" />
       </Link>
 
@@ -86,7 +89,8 @@ const [{user},dispatch]=useContext(DataContext)
           <DotLoader color="#000" size={15}></DotLoader>
           ) : (
           " Sign In"
-)}</button>
+            )}
+          </button>
         </form>
         {/* agreement */}
         <p>
@@ -96,7 +100,14 @@ const [{user},dispatch]=useContext(DataContext)
         </p>
 
         {/* create account btn */}
-        <button type='submit' onClick={authHandler} name='signup' className={classes.login_registerButton}>Create your Amazon Account</button>
+        <button type='submit' onClick={authHandler} name='signup' className={classes.login_registerButton}>
+        {loading.signUp ? (
+          <DotLoader color="#000" size={15}></DotLoader>
+          ) : (
+          " Create your Amazon Account"
+          )}
+        </button>
+        
         {
           error && <small style={{paddingTop:"px", color:"red"} }>
             {error}
