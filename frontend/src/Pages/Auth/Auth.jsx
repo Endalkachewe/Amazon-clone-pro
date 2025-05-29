@@ -6,12 +6,17 @@ import { auth } from '../../Utility/firebase'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { DataContext } from '../../Component/DataProvider/DataProvider'
 import { Type } from '../../Utility/action.type'
+import { DotLoader } from 'react-spinners'
 
 function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   console.log(email, password);
+  const [loading, setLoading] = useState({
+    signIn: false,
+    signUp: false
+  });
   
 const [{user},dispatch]=useContext(DataContext)
 
@@ -19,6 +24,7 @@ const [{user},dispatch]=useContext(DataContext)
     e.preventDefault()
     console.log(e.target.name);
     if (e.target.name == "signin") {
+      setLoading({...loading, signIn:true})
       // firebase auth
       signInWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
@@ -27,11 +33,15 @@ const [{user},dispatch]=useContext(DataContext)
             type: Type.SET_USER,
             user:userInfo.user
           })
+          setLoading({...loading, signIn:false})
         })
         .catch((err) => {
           console.log(err);
+          setError(err.message);
+          setLoading({...loading, signUp:false})
         });
     } else {
+      setLoading({...loading, signUp:true})
       createUserWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {
           console.log(userInfo);
@@ -39,9 +49,12 @@ const [{user},dispatch]=useContext(DataContext)
             type: Type.SET_USER,
             user:userInfo.user
           })
+          setLoading({...loading, signUp:false})
         })
         .catch((err) => {
           console.log(err);
+          setError(err.message);
+          setLoading({...loading, signUp:false})
         });
     }
 }
@@ -68,7 +81,12 @@ const [{user},dispatch]=useContext(DataContext)
             <label htmlFor="password">Password</label>
             <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" id="password" />
           </div>
-          <button type='submit' onClick={authHandler} name='signin' className={classes.login_signInButton}>Sign in</button>
+          <button type='submit' onClick={authHandler} name='signin' className={classes.login_signInButton}>
+          {loading.signIn ? (
+          <DotLoader color="#000" size={15}></DotLoader>
+          ) : (
+          " Sign In"
+)}</button>
         </form>
         {/* agreement */}
         <p>
@@ -79,6 +97,11 @@ const [{user},dispatch]=useContext(DataContext)
 
         {/* create account btn */}
         <button type='submit' onClick={authHandler} name='signup' className={classes.login_registerButton}>Create your Amazon Account</button>
+        {
+          error && <small style={{paddingTop:"px", color:"red"} }>
+            {error}
+          </small>
+        }
       </div>
   
     </section>
