@@ -45,7 +45,7 @@ function Header() {
               <input type="text" name='' id='' placeholder='search product' />
           
           {/* icon */}
-          <FaSearch size={38} />
+          <FaSearch size={40} />
         </div>
         {/* End of the second section */}
         <div className={classes.order_container}>
