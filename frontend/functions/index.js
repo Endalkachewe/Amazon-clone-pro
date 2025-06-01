@@ -3,6 +3,7 @@ const logger = require("firebase-functions/logger");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const { setGlobalOptions } = require("firebase-functions");
 
 dotenv.config(); // Load environment variables at the top
 // logger.log("Stripe Key:", process.env.STRIPE_KEY); // Log the Stripe key for debugging
@@ -10,6 +11,8 @@ dotenv.config(); // Load environment variables at the top
 const stripe = require("stripe")(process.env.STRIPE_KEY); // Use the environment variable
 
 const app = express();
+setGlobalOptions({ maxInstances: 10 })
+
 app.use(cors({ origin: true }));
 app.use(express.json());
 
@@ -27,7 +30,7 @@ app.get("/", (req, res) => {
 //     }
 // });
 app.post("/payment/create", async (req, res) => {
-    const total = req.query.total;
+    const total = parseInt(req.query.total);
     if (total > 0) {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: total,

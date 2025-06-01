@@ -5,7 +5,9 @@
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
+    "build": "react-scripts build",
     "deploy": "firebase deploy --only functions",
+
     "logs": "firebase functions:log"
   },
   "engines": {
