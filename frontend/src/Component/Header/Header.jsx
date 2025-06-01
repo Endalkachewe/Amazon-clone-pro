@@ -18,7 +18,7 @@ function Header() {
           {/* logo */}
           <div className={classes.logo_container} >
             <Link to ="/">
-              <img src="https://cdn.logojoy.com/wp-content/uploads/20230629132639/current-logo-600x338.png" alt="Amazon logo" />
+              <img src="https://pngimg.com/uploads/amazon/small/amazon_PNG11.png" alt="Amazon logo" />
             </Link>
             {/* Delivery */}
             <div className={classes.delivery}>
