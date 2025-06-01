@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import classes from './cart.module.css'
 import { Type } from '../../Utility/action.type'
 import { IoIosArrowUp } from "react-icons/io";
+import Payment from '../Payment/Payment'
 import { IoIosArrowDown } from "react-icons/io";
 function Cart() {
   const [{ basket, user }, dispatch] = useContext(DataContext)
