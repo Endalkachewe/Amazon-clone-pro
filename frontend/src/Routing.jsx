@@ -31,7 +31,7 @@ function Routing() {
             <Order />
           </ProtectedRoute>
         } />
-        <Route path='/category/:categoryName' element={<Result />} /> 
+        <Route path='/catagory/:catagoryName' element={<Result />} /> 
         <Route path='/products/:productId' element={<ProductDetails />} />
         <Route path='/cart' element={<Cart />} />
       </Routes>
